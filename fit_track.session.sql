@@ -22,7 +22,7 @@ CREATE TABLE `rooms` (
 );
 -- @block
 CREATE TABLE `trainers` (
-    `trainer_ID` int NOT NULL AUTO_INCREMENT,
+    `trainer_ID` int PRIMARY KEY AUTO_INCREMENT,
     `First_name` varchar(50) NOT NULL,
     `Last_name` varchar(50) NOT NULL,
     `specialization` varchar(50) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `workout_plans` (
 CREATE TABLE `memberships` (
     `membership_ID` int NOT NULL AUTO_INCREMENT,
     `member_ID` int NOT NULL,
-    `room_ID` int NOT NULL,
+    `room_ID` int,
     `start_date` date NOT NULL,
     PRIMARY KEY (`membership_ID`),
     KEY `fk_member_id` (`member_ID`),
@@ -76,14 +76,94 @@ CREATE TABLE `appointments` (
 );
 
 -- @block
-INSERT INTO members (First_name,Last_name,Date_Of_Birth,Gender,Phone_number)
-VALUES('Alex','Johnson','1990-07-15','Male','1234567890');
--- @block
-INSERT INTO members (First_name,Last_name,Date_Of_Birth,Gender,Phone_number)
-VALUES('Adam','Davids','1990-07-14','Male','1234567890');
+INSERT INTO memberships (member_ID, start_date)
+VALUES
+('1', '2024-01-01'),
+('2', '2024-06-15'),
+('3', '2024-11-20');
 
 -- @block
-SELECT * FROM members;
-
+INSERT INTO trainers (First_name, Last_name, specialization)
+VALUES ('Alice', 'Johnson', 'Musculation'),
+    ('Bob', 'Smith', 'Cardio'),
+    ('Eva', 'Martinez', 'Studio');
 -- @block
-SELECT * FROM members ORDER BY Date_Of_Birth;
+SELECT *
+FROM trainers;
+-- @block
+INSERT INTO members (
+        First_name,
+        Last_name,
+        Date_Of_Birth,
+        Gender,
+        Phone_number
+    )
+VALUES(
+        'Alex',
+        'Johnson',
+        '1990-07-15',
+        'Male',
+        '1234567890'
+    );
+-- @block
+INSERT INTO members (
+        First_name,
+        Last_name,
+        Date_Of_Birth,
+        Gender,
+        Phone_number,
+        Email
+    )
+VALUES(
+        'Nora',
+        'Hall',
+        '2000-09-15',
+        'Female',
+        '1234567890',
+        'Nora@gmail.com'
+    );
+-- @block
+-- EX 1
+INSERT INTO members (
+        First_name,
+        Last_name,
+        Date_Of_Birth,
+        Gender,
+        Phone_number
+    )
+VALUES(
+        'Adam',
+        'Davids',
+        '1990-07-14',
+        'Male',
+        '1234567890'
+    );
+-- @block
+-- EX 2
+SELECT *
+FROM members;
+-- @block
+-- EX 3
+SELECT *
+FROM members
+ORDER BY Date_Of_Birth;
+-- @block
+-- EX 4
+SELECT DISTINCT Gender
+FROM members;
+-- @block
+SELECT COUNT(DISTINCT Gender)
+FROM members;
+-- @block
+-- EX 5
+SELECT *
+FROM trainers
+LIMIT 3;
+-- @block
+-- EX 6
+SELECT *
+FROM members
+WHERE Date_Of_Birth > '2000-01-01';
+-- @block
+-- EX 7
+SELECT * FROM trainers WHERE specialization IN('Musculation','Cardio');
